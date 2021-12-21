@@ -1,2 +1,4 @@
 Fires.csv filter=lfs diff=lfs merge=lfs -text
 fires_data.db filter=lfs diff=lfs merge=lfs -text
+data/Fires.csv filter=lfs diff=lfs merge=lfs -text
+data/fires_data.db filter=lfs diff=lfs merge=lfs -text
