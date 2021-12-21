@@ -8,7 +8,7 @@
   
 </div>
 
-![Screenshot_1](https://github.com/fhelms8/Project-3/blob/main/Unused%20files/pics/dashboard.png?raw=true)
+![Screenshot_1](./static/img/dashboard.png)
 
 <!-- TABLE OF CONTENTS -->
 <details>
