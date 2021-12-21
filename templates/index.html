@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>TX Wildfires</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap1.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>
+    <link rel="shortcut icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/fire_1f525.png" />
+</head>
+
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">
+                            <!-- Home Button with Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                            <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+                            </svg> Home
+                        <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="overview">
+                        <!-- Overview Button with Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-line" viewBox="0 0 16 16">
+                        <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z"/>
+                        </svg>
+                        Overview
+                        <!-- <span class="visually-hidden">(current)</span> -->
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="insights">
+                        <!-- Overview Button with Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-bookmark-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M6 1h6v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8V1z"/>
+                            <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                            <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                          </svg> Insights
+                        <!-- <span class="visually-hidden">(current)</span> -->
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <select id="selFireYear" onchange="optionChanged(this.value)" class="nav-link dropdown-toggle dropdown-menu" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <option>Select Year</option>
+                            <option>1992</option>
+                            <option>1993 </option>
+                            <option>1994</option>
+                            <option>1995 </option>
+                            <option>1996</option>
+                            <option>1997</option>
+                            <option>1998</option>
+                            <option>1999</option>
+                            <option>2000</option>
+                            <option>2001</option>
+                            <option>2002</option>
+                            <option>2003</option>
+                            <option>2004</option>
+                            <option>2005</option>
+                            <option>2006 </option>
+                            <option>2007</option>
+                            <option>2008 </option>
+                            <option>2009</option>
+                            <option>2010</option>
+                            <option>2011</option>
+                            <option>2012</option>
+                            <option>2013</option>
+                            <option>2014</option>
+                            <option>2015</option>
+                        </select>
+                </li>
+                <li class="nav-item dropdown">
+                    <select id="selFireCause" onchange="optionChanged(this.value)" class="nav-link dropdown-toggle dropdown-menu" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <option>Select Cause</option>
+                            <option>Arson</option>
+                            <option>Campfire</option>
+                            <option>Smoking</option>
+                            <option>Lightning</option>
+                            <option>Equipment Use</option>
+                            <option>Children</option>
+                            <option>Railroad</option>
+                            <option>Fireworks</option>
+                            <option>Powerline</option>
+                            <option>Debris Burning</option>
+                            <option>Miscellaneous</option>
+                            <option>Missing/Undefined</option>
+                            <option>Structure</option>
+                        </select>
+                </li>
+            </ul>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+<body>
+    <br />
+    <div class="container">
+        <div class ="row">
+            <div class="card border-danger mb-3">
+                <div class="card-body text-danger">
+                <div align='center'>
+                    <h1> Fighting Fire with Data </h1>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class ="row">    
+            <div class="col-lg-7">
+                <div class="mapContainer" style="height: 550px;width: 100%;">
+                    <div align="center">
+                        <br>
+                        <h2> Where do Wildfires Happen? </h2>
+                        Select a Year or Cause from the dropdown above to view wildfire locations.
+                        <br>
+                    </div>
+                    <div id="map" class="currentMap">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div align="center">
+                    <br>
+                    <h2> Wildfires and Weather </h2>
+                </div>
+                        <canvas id="myChart0"></canvas>
+                        <canvas id="myChart"></canvas>
+                        <canvas id="myChart3"></canvas>
+            </div>
+        </div>
+        <br /><br />
+        <div class="chartContainer">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="fbsCont">
+                        <div id="fires-by-size"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="fbcCont">
+                        <div id="fires-by-cause-bar"></div>
+                    </div>
+                  </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                  <div id="size-by-year"></div>
+                </div>
+            </div>
+            <br /><br />      
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="fbtCont">
+                        <div id="cause-by-year-plot"></div>
+                    </div>
+                </div>
+            </div>
+            <br /><br />
+            <!-- <div class="row">
+                <div class="col-md-12">
+                  <div id="causes" style="height: 550px;width: 100%;"></div>
+                </div>
+            </div>
+            <br /><br />
+            <div class="row">
+                <div class="col-md-12">
+                  <div id="fires-by-year-bar"></div>
+                </div>
+            </div> -->
+        </div> 
+    </div>
+    <br /><br />
+    <script type="text/javascript" src="/static/js/logic.js"></script>
+</body>
+
+</html>
