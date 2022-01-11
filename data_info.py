@@ -8,7 +8,7 @@ engine = create_engine("sqlite:///data/fires_data.db")
 
 def get_spi():
     sql = """
-    Select * from spi
+    Select * from SPI
     """
     results_df = pd.read_sql(sql, con=engine)
     results = results_df.to_dict(orient='records')
@@ -16,7 +16,7 @@ def get_spi():
 
 def get_paleo():
     sql = """
-    Select * from paleo
+    Select * from PALEO
     """
 
     results_df = pd.read_sql(sql, con=engine)
@@ -26,7 +26,7 @@ def get_paleo():
 def get_acres_cause():
     sql = """
     SELECT stat_cause_descr, sum(fire_size)
-    FROM fires
+    FROM Fires
     GROUP BY stat_cause_descr
     ORDER BY stat_cause_descr ASC;      
     """
@@ -38,7 +38,7 @@ def get_acres_cause():
 def get_acres_class():
     sql = """
     SELECT fire_size_class, sum(fire_size)
-    FROM fires
+    FROM Fires
     GROUP BY fire_size_class
     ORDER BY fire_size_class ASC;  
     """
@@ -50,7 +50,7 @@ def get_acres_class():
 def get_acres_year():
     sql = """
     SELECT fire_year, sum(fire_size)
-    FROM fires
+    FROM Fires
     GROUP BY fire_year
     ORDER BY fire_year ASC;    
     """
@@ -61,7 +61,7 @@ def get_acres_year():
 
 def get_texas_fires():
     sql = """
-    Select * from fires
+    Select * from Fires
     WHERE STATE = 'TX';
     """
 
@@ -72,7 +72,7 @@ def get_texas_fires():
 def get_fires_by_year():
     sql = """
     SELECT COUNT(fire_year), fire_year
-    FROM fires
+    FROM Fires
     WHERE STATE = 'TX'
     GROUP BY fire_year
     ORDER BY fire_year ASC;
@@ -85,7 +85,7 @@ def get_fires_by_year():
 def get_causes_by_year():
     sql = """
     SELECT COUNT(stat_cause_descr), fire_year, stat_cause_descr
-    FROM fires
+    FROM Fires
     WHERE STATE = 'TX'
     GROUP BY fire_year, stat_cause_descr
     ORDER BY fire_year ASC;
