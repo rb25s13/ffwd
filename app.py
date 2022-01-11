@@ -1,17 +1,15 @@
 # import necessary libraries
 # from models import create_classes
-import os
-import sqlalchemy
+# import os
+# import sqlalchemy
 import data_info
-from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, inspect, join, outerjoin, MetaData, Table
+# from sqlalchemy.ext.automap import automap_base
+# from sqlalchemy.orm import Session
+# from sqlalchemy import create_engine, inspect, join, outerjoin, MetaData, Table
 from flask import (
     Flask,
     render_template,
-    jsonify,
-    request,
-    redirect)
+    jsonify)
 
 
 #################################################

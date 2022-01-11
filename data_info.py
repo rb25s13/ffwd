@@ -1,10 +1,10 @@
 from sqlalchemy import create_engine
-import os 
+# import os 
 import pandas as pd
 
 # connect_string = os.getenv('DATABASE_URL2', '')
 # print("conn string", connect_string)
-engine = create_engine("sqlite:///./data/fires_data.db")
+engine = create_engine("sqlite:///data/fires_data.db")
 
 def get_spi():
     sql = """
