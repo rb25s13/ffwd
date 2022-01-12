@@ -5,7 +5,6 @@ const cbyData = '/api/causes_by_year';
 const yearData = '/api/years';
 
 function init(){
-    // pull data from the samples.json file
     initUrl = `${fireData}/1992`;
     d3.json(initUrl).then(data => {
         optionChanged(1992);

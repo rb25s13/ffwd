@@ -3,6 +3,7 @@
 # import os
 # import sqlalchemy
 import data_info
+import pandas as pd
 # from sqlalchemy.ext.automap import automap_base
 # from sqlalchemy.orm import Session
 # from sqlalchemy import create_engine, inspect, join, outerjoin, MetaData, Table
@@ -46,15 +47,17 @@ def overview():
 def insights():
     return render_template("insights.html")
 
-@app.route("/api/spi")
-def spi():
-    results = data_info.get_spi()
-    return jsonify(results)
+@app.route("/api/fire_causes")
+def causes():
+    results = pd.read_csv('./data/fire_causes.csv')
+    results = results.to_json(orient = "records")
+    return results
 
-@app.route("/api/paleo")
-def paleo():
-    p_results = data_info.get_paleo()
-    return jsonify(p_results)
+@app.route("/api/year_list")
+def year_list():
+    yrResults = pd.read_csv('./data/year_list.csv')
+    yrResults = yrResults.to_json(orient = "records")
+    return yrResults
 
 @app.route("/api/acres_cause")
 def acres_cause():
