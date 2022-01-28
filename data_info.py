@@ -2,62 +2,10 @@ from sqlalchemy import create_engine
 # import os 
 import pandas as pd
 
-# connect_string = os.getenv('DATABASE_URL2', '')
-# print("conn string", connect_string)
+
 engine = create_engine("sqlite:///data/fires_data.db")
 
-def get_spi():
-    sql = """
-    Select * from SPI
-    """
-    results_df = pd.read_csv('./data/SPI-tx.csv')
-    results = results_df.to_dict(orient='records')
-    return results
 
-def get_paleo():
-    sql = """
-    Select * from PALEO
-    """
-
-    results_df = pd.read_sql(sql, con=engine)
-    p_results = results_df.to_dict(orient='records')
-    return p_results
-
-def get_acres_cause():
-    sql = """
-    SELECT stat_cause_descr, sum(fire_size)
-    FROM Fires
-    GROUP BY stat_cause_descr
-    ORDER BY stat_cause_descr ASC;      
-    """
-
-    results_df = pd.read_sql(sql, con=engine)
-    AC_results = results_df.to_dict(orient='records')
-    return AC_results
-
-def get_acres_class():
-    sql = """
-    SELECT fire_size_class, sum(fire_size)
-    FROM Fires
-    GROUP BY fire_size_class
-    ORDER BY fire_size_class ASC;  
-    """
-
-    results_df = pd.read_sql(sql, con=engine)
-    AClass_results = results_df.to_dict(orient='records')
-    return AClass_results
-
-def get_acres_year():
-    sql = """
-    SELECT fire_year, sum(fire_size)
-    FROM Fires
-    GROUP BY fire_year
-    ORDER BY fire_year ASC;    
-    """
-
-    results_df = pd.read_sql(sql, con=engine)
-    AY_results = results_df.to_dict(orient='records')
-    return AY_results
 
 def get_texas_fires():
     sql = """
@@ -212,7 +160,3 @@ def get_years():
     results_df = pd.read_sql(sql, con=engine)
     year_results = results_df.to_dict(orient='records')
     return year_results
-
-if __name__ == '__main__':
-    info = get_spi()
-    print(info)
