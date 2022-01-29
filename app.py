@@ -25,7 +25,7 @@ app = Flask(__name__)
 from flask_sqlalchemy import SQLAlchemy
 # from connection import connect_string
 
-   
+data_url = 'https://media.githubusercontent.com/media/rb25s13/ffwd/main/data/Fires.csv'   
     
 @app.route("/")
 def home():
@@ -57,28 +57,28 @@ def year_list():
 
 @app.route("/api/texas_fires")
 def texas_fires():
-    TF_results =  pd.read_csv('./data/Fires.csv')
-    TF_results = TF_results[TF_results["STATE"] == "TX"]
+    TF_results =  pd.read_csv(f'https://media.githubusercontent.com/media/rb25s13/ffwd/main/data/TX_fires.csv')
+    # TF_results = TF_results[TF_results["STATE"] == "TX"]
     TF_results = TF_results.to_json(orient = "records")
     return TF_results
 
 @app.route("/api/cali_fires")
 def cali_fires():
-    CaF_results =  pd.read_csv('./data/Fires.csv')
+    CaF_results =  pd.read_csv(data_url)
     CaF_results = CaF_results[CaF_results["STATE"] == "CA"]
     CaF_results = CaF_results.to_json(orient = "records")
     return CaF_results
 
 @app.route("/api/colo_fires")
 def colo_fires():
-    CoF_results = pd.read_csv('./data/Fires.csv')
+    CoF_results = pd.read_csv(data_url)
     CoF_results = CoF_results[CoF_results["STATE"] == "CO"]
     CoF_results = CoF_results.to_json(orient = "records")
     return CoF_results
 
 @app.route("/api/texas_fires/<option>")
 def selected_texas_fires(option):
-    TFo_results =  pd.read_csv('./data/Fires.csv')
+    TFo_results =  pd.read_csv(data_url)
     TFo_results = TFo_results[TFo_results["STATE"] == "TX"]
     if str(option).isnumeric():
         ouput = TFo_results[TFo_results["FIRE_YEAR"] == int(option)]
@@ -89,7 +89,7 @@ def selected_texas_fires(option):
 
 @app.route("/api/cali_fires/<option>")
 def selected_cali_fires(option):
-    CaFo_results =  pd.read_csv('./data/Fires.csv')
+    CaFo_results =  pd.read_csv(data_url)
     CaFo_results = CaFo_results[CaFo_results["STATE"] == "CA"]
     if str(option).isnumeric():
         ouput = CaFo_results[CaFo_results["FIRE_YEAR"] == int(option)]
@@ -100,7 +100,7 @@ def selected_cali_fires(option):
 
 @app.route("/api/colo_fires/<option>")
 def selected_colo_fires(option):
-    CoFo_results = pd.read_csv('./data/Fires.csv')
+    CoFo_results = pd.read_csv(data_url)
     CoFo_results = CoFo_results[CoFo_results["STATE"] == "CO"]
     if str(option).isnumeric():
         ouput = CoFo_results[CoFo_results["FIRE_YEAR"] == int(option)]
